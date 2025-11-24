@@ -110,6 +110,7 @@ Algoritmo PROYECTO_NOMINA
                         Escribir "Vueltas del día ", dias[dia_actual], " (0 a 10):"
                         Leer vueltas_dia
                         Bono_dia_vuelta <- tarifa_vuelta[vueltas_dia] 
+						acum<-acum+Bono_dia_vuelta
                         vueltas_totales <- vueltas_totales + vueltas_dia
                     FinSi
                 FinPara
@@ -170,7 +171,7 @@ Algoritmo PROYECTO_NOMINA
             FinSi
             //--------------------
             // Festivo triple (2 días extra)
-            Si trabajo_festivo = "S" Entonces
+            Si trabajo_festivo = "SI" Entonces
                 bono_festivo <- sueldo_diario * 2
             FinSi
             //----------------------
@@ -186,13 +187,15 @@ Algoritmo PROYECTO_NOMINA
                 FinSi
             FinSi
             
-            total_bono <- Bono_dia_vuelta + bono_asistencia + bono_festivo
-            //-------------------
-            // Calculo de deducciones
-            infonavit <- sueldo_semana * 0.05
-            imss <- sueldo_semana * 0.02
-            base_isr <- sueldo_semana - (imss + infonavit)
+            total_bono <- acum + bono_asistencia + bono_festivo
+            
             //------------------------------------------
+			//-------------------
+            // Calculo de deducciones
+			
+            infonavit <- (sueldo_semana + total_bono) * 0.05
+            imss <- (sueldo_semana +total_bono)* 0.02
+            base_isr <- sueldo_semana + total_bono
 			//
 			// Calculo del ISR
             Si base_isr >= 509.47 Y base_isr <= 1027.52 Entonces
@@ -212,6 +215,7 @@ Algoritmo PROYECTO_NOMINA
                     FinSi
                 FinSi
             FinSi
+			
             //---------------------------------
             Escribir "¿Desea agregar un descuento adicional? (SI o NO):"
             Leer agregar_descuento
@@ -245,7 +249,7 @@ Algoritmo PROYECTO_NOMINA
             Si puesto = "CHOFER OPERADOR" o puesto = "CHOFEROPERADOR"   Entonces
                 Escribir "Día de descanso: ", descanso_dia
                 Escribir "Vueltas totales: ", vueltas_totales
-                Escribir "Bono por vueltas: $", Bono_dia_vuelta
+                Escribir "Bono por vueltas: $", acum
                 Escribir "Bono asistencia: $", bono_asistencia
             FinSi
             
