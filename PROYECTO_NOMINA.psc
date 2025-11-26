@@ -161,7 +161,7 @@ Algoritmo PROYECTO_NOMINA
             // Chofer cobra 7 si trabaja 6 días
             Si puesto = "CHOFER OPERADOR" o puesto = "CHOFEROPERADOR" Entonces
                 Si dias_laborados = 6 Entonces
-                    sueldo_semana <- sueldo_diario * 7
+                    sueldo_semana <- sueldo_diario * 6
                 FinSi
             FinSi
             //---------------
@@ -185,16 +185,17 @@ Algoritmo PROYECTO_NOMINA
                 Si faltas = 0 Entonces
                     bono_asistencia <- 125
                 FinSi
+				
+			
             FinSi
             
-            total_bono <- acum + bono_asistencia + bono_festivo
+            total_bono <- acum + bono_asistencia + bono_festivo + pago_horas_extra 
             
             //------------------------------------------
 			//-------------------
             // Calculo de deducciones
-			
-            infonavit <- (sueldo_semana + total_bono) * 0.05
-            imss <- (sueldo_semana +total_bono)* 0.02
+			infonavit <- (sueldo_semana + total_bono) * 0.05
+			imss <- (sueldo_semana +total_bono)* 0.02
             base_isr <- sueldo_semana + total_bono
 			//
 			// Calculo del ISR
@@ -233,7 +234,7 @@ Algoritmo PROYECTO_NOMINA
             //-----------
 			// Calculo de deducciones y sumatorias
             total_deducciones <- imss + infonavit + isr + monto_descuento
-            total_pagar <- sueldo_semana + total_bono + pago_horas_extra - total_deducciones
+            total_pagar <- sueldo_semana + total_bono + pago_horas_extra - total_deducciones 
             total_area <- total_area + total_pagar
             total_general <- total_general + total_pagar
             
@@ -251,6 +252,8 @@ Algoritmo PROYECTO_NOMINA
                 Escribir "Vueltas totales: ", vueltas_totales
                 Escribir "Bono por vueltas: $", acum
                 Escribir "Bono asistencia: $", bono_asistencia
+			SiNo
+				Escribir "Día de descanso: ", descanso_dia
             FinSi
             
             Si trabajo_festivo = "SI" Entonces
